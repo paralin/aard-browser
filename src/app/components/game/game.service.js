@@ -23,11 +23,12 @@ export class Game {
     var comp = new Component(this, this.pGame);
     comp.initialize();
     this.activeComponents.push(comp);
+    return comp;
   }
 
   create() {
     // Initialize the current state display
-    this.spawnComponent(Game.Components.StateDisplay);
+    this.statusDisplay = this.spawnComponent(Game.Components.StateDisplay);
   }
 
   dispose() {

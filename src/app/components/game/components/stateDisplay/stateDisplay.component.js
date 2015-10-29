@@ -5,9 +5,12 @@ export class StateDisplay {
   }
 
   initialize() {
-    var bmptext = this.bmptext = this.pGame.add.bitmapText(10, 100, 'carrier_command', 'Drag me around', 34);
-    bmptext.inputEnabled = true;
-    bmptext.input.enableDrag();
+    this.bmptext = this.pGame.add.bitmapText(10, 100, 'gem', 'Drag me around', 10);
+    this.update();
+  }
+
+  update() {
+    this.bmptext.text = this.game.State.Name;
   }
 
   dispose() {
