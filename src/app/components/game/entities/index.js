@@ -1,5 +1,8 @@
+import { Block } from './block/block.entity.js';
+import { Player } from './player/player.entity.js';
 
 export function Entities(Game) {
-  // Removeme later, used to silence errors
-  Game.EntitiesRegistered = true;
+  var Entities = Game.Entities;
+  Entities.Block = Block;
+  Entities.Player = Player;
 }

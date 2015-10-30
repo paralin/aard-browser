@@ -1,4 +1,6 @@
-import { bitmapFonts } from './fonts/bitmap.fonts.js';
+/*global PIXI*/
+
+import { images } from './images/all.images.js';
 
 export class Preloader {
   constructor ($log) {
@@ -12,9 +14,19 @@ export class Preloader {
     this.loadedPercent = 0;
   }
 
-  preload(pGame) {
-    bitmapFonts.forEach((args) => {
-      pGame.load.bitmapFont.apply(pGame.load, args);
+  preload(progcb, donecb) {
+    var t = this;
+    if (t.resources)
+      return donecb(t.resources);
+
+    var imagename;
+    for (imagename in images) {
+      PIXI.loader.add(imagename, images[imagename]);
+    }
+    PIXI.loader.on('progress', progcb);
+    PIXI.loader.load((loader, resources) => {
+      t.resources = resources;
+      donecb(t.resources);
     });
   }
 }

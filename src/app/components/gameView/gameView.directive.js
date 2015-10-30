@@ -1,5 +1,5 @@
 // Make ESLint happy
-/*global Phaser*/
+/*global PIXI*/
 /*global $*/
 
 export function GameViewDirective() {
@@ -41,13 +41,7 @@ class GameViewController {
     var height = this.height = ele.prop('offsetHeight');
 
     if (!this.pGame) return;
-    this.pGame.stage.height = this.pGame.height = height;
-    this.pGame.stage.width = this.pGame.width = width;
-
-    if (this.pGame.renderType === Phaser.WEBGL)
-    {
-      this.pGame.renderer.resize(width, height);
-    }
+    this.pGame.resize(width, height);
   }
 
   initialize() {
@@ -55,23 +49,17 @@ class GameViewController {
     this.updateSize();
     $(this.window).on('resize', () => {
       t.updateSize();
+      t.game.resized();
     });
 
-    var pGame = this.pGame = new Phaser.Game(this.width, this.height, Phaser.AUTO, 'game-container', { preload: preload, create: create });
+    var pGame = this.pGame = new PIXI.autoDetectRenderer(this.width, this.height);
+    $("#game-container")[0].appendChild(pGame.view);
+    pGame.view.style.width = "100%";
+    pGame.view.style.height = "100%";
+    this.window.pGame = pGame;
+
     var game = this.game;
-
-    function preload() {
-      this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-      this.scale.pageAlignVertically = true;
-      game.initialize(pGame);
-      game.preload();
-    }
-
-    function create() {
-      game.create();
-    }
-  }
-
-  preload() {
+    game.initialize(pGame);
+    game.preload();
   }
 }
