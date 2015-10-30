@@ -16,7 +16,8 @@ export class Player {
   }
 
   update() {
-    this.sprite.position.x += 1;
+    this.sprite.position.x += 2;
+    this.sprite.position.y += 2;
   }
 
   dispose() {
