@@ -1,6 +1,6 @@
 /*global PIXI*/
 export class Block {
-  constructor(game, pGame, size, x, y) {
+  constructor(game, pGame, stage, size, x, y) {
 
     this.BlockTypes = {
       AIR: 0,
@@ -10,6 +10,7 @@ export class Block {
 
     this.size = size;
     this.game = game;
+    this.stage = stage;
     this.pGame = pGame;
     this.x = x;
     this.y = y;
@@ -32,7 +33,7 @@ export class Block {
     sprite.lineStyle(1, 0xFF0000);
     sprite.drawRect(x*this.size, y*this.size, this.size, this.size);
 
-    this.game.stage.addChild(sprite);
+    this.stage.addChild(sprite);
   }
 
   generateType() {

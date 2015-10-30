@@ -61,10 +61,7 @@ export class Game {
       t.update();
     });
 
-    if (this.requiresMapUpdate) {
-      this.map.update();
-      this.requiresMapUpdate = false;
-    }
+    this.map.update();
     this.player.update();
 
     this.pGame.render(this.stage);

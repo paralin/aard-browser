@@ -40,6 +40,22 @@ class GameViewController {
     var width = this.width = ele.prop('offsetWidth');
     var height = this.height = ele.prop('offsetHeight');
 
+    var scalefactor = 0;
+
+    if (width > 4096) {
+      scalefactor = 4096-width;
+    }
+
+    if (height > 2160) {
+      var nscalefactor = 2160-height;
+      scalefactor = Math.min(nscalefactor, scalefactor);
+    }
+
+    if (scalefactor != 0) {
+      width += scalefactor;
+      height += scalefactor;
+    }
+
     if (!this.pGame) return;
     this.pGame.resize(width, height);
   }

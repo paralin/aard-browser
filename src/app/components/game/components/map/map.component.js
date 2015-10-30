@@ -1,5 +1,7 @@
+/*global PIXI*/
 // 10x10 pixelsj
 var BLOCK_SIZE = 10;
+var PRERENDER_SIZE = 10;
 export class Map {
   constructor(game, pGame) {
     this.game = game;
@@ -9,14 +11,28 @@ export class Map {
   }
 
   initialize() {
+    this.stage = new PIXI.Container();
+    this.game.stage.addChild(this.stage);
   }
 
   update() {
     // First, check the size of our view.
     var width = this.pGame.width;
     var height = this.pGame.height;
-    var numwidth = Math.floor((width) / BLOCK_SIZE);
+    //var numwidth = Math.floor((width) / BLOCK_SIZE);
+    var numwidth = 150;
+    BLOCK_SIZE = width/numwidth;
     var numheight = Math.floor((height) / BLOCK_SIZE);
+
+    numwidth += PRERENDER_SIZE;
+    numheight += PRERENDER_SIZE;
+
+    var extrasize = (BLOCK_SIZE*PRERENDER_SIZE);
+    this.stage.height = height+extrasize;
+    this.stage.width = width+extrasize;
+    this.stage.x = -extrasize;
+    this.stage.y = -extrasize;
+
     var i;
     var x;
     var row;
@@ -63,7 +79,7 @@ export class Map {
   }
 
   generateBlock(x, y) {
-    var block = this.blocks[y][x] = new this.game.Entities.Block(this.game, this.pGame, BLOCK_SIZE, x, y);
+    var block = this.blocks[y][x] = new this.game.Entities.Block(this.game, this.pGame, this.stage, BLOCK_SIZE, x, y);
     block.initialize();
   }
 
